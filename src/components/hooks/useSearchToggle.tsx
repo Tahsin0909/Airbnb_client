@@ -1,20 +1,16 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 
-
-const useSearchToggle = () => {
-
-    const [searchToggle, setSearchToggle] = useState(false)
-
+const useSearchToggle = (): [boolean, Dispatch<SetStateAction<boolean>>] => {
+    const [searchToggle, setSearchToggle] = useState(false);
 
     useEffect(() => {
-        console.log(window.scrollY);
         const handleScroll = () => {
             const toggleHeight = 50;
             if (window.scrollY > toggleHeight) {
                 setSearchToggle(true);
-            } else if (window.scrollY <= toggleHeight) {
+            } else {
                 setSearchToggle(false);
             }
         };
@@ -25,10 +21,9 @@ const useSearchToggle = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-
     }, []);
 
-  return [searchToggle] ;
+    return [searchToggle, setSearchToggle];
 };
 
 export default useSearchToggle;

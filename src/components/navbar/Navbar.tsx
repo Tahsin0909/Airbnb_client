@@ -12,8 +12,8 @@ import useSearchToggle from '../hooks/useSearchToggle';
 
 
 const Navbar = () => {
-    const [searchToggle] = useSearchToggle()
-    console.log(searchToggle);
+    const [searchToggle, setSearchToggle] = useSearchToggle()
+    console.log("Navbar rendered", searchToggle);
 
     return (
         <div className={`${searchToggle ? 'h-[100px]' : 'h-[180px]'} w-full fixed top-0 left-0 right-0 z-10 bg-white border-b-2 transition-all`}>
@@ -29,7 +29,7 @@ const Navbar = () => {
                     <Profile />
                 </div>
                 <div>
-                    <Search />
+                    <Search searchToggle={searchToggle} setSearchToggle={setSearchToggle}/>
                 </div>
             </div>
         </div>
