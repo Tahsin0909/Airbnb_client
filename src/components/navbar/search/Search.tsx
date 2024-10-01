@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { IoSearchSharp } from "react-icons/io5";
 import { convertDate } from "@/helper/date";
+import GuestInput from "./GuestInput";
 
 
 
@@ -23,6 +24,10 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
     };
 
     const [inputValue, setInputValue] = useState("");
+    //fixed
+    const [guests, setGuests] = useState<string | null>("");
+    console.log(guests);
+    //fixed
 
 
     const onChange = (dates: [Date | null, Date | null]) => {
@@ -71,7 +76,7 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [inputRef]);
-    
+
     return (
 
         <div>
@@ -165,22 +170,12 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
 
 
                         {/* guest  */}
-                        <div
-                            className="flex flex-col items-start justify-center  px-4 h-full focus-within:!bg-white focus-within:shadow-xl focus-within:hover:bg-white  hover:bg-gray-200 group-focus-within:bg-gray-200">
-
-                            <label
-                                onClick={handleToggler}
-                                htmlFor="guest"
-                                className={`${searchToggle ? "" : 'text-[13px]'} text-nowrap  transition-all duration-500`}>
-                                Add guest
-                            </label>
-                            <input
-                                id="guest"
-                                type="text"
-                                placeholder="Search destination"
-                                className={`${searchToggle ? 'hidden' : 'w-[150px] placeholder:text-base'} bg-transparent focus:outline-0`} />
-
-                        </div>
+                        <GuestInput
+                            value={guests}            // Pass the state for guests
+                            onChange={setGuests}       // Update the guests state
+                            handleToggler={handleToggler}  // Function to toggle search
+                            searchToggle={searchToggle}    // Boolean to control input visibility
+                        />
                         {/* guest  */}
 
 
