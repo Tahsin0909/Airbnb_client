@@ -67,8 +67,8 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
                                     className={`${searchToggle ? 'hidden' : 'block'} border-r-2 px-4 h-full focus-within:!bg-white focus-within:shadow-xl focus-within:hover:bg-white  hover:bg-gray-200 group-focus-within:bg-gray-200`}>
 
                                     <label
-                                        htmlFor="startData" c
-                                        lassName="text-[13px]">
+                                        htmlFor="startData" 
+                                        className="text-[13px]">
                                         Check In
                                     </label>
                                     <input
