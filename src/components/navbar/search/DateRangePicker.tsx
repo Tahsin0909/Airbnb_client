@@ -57,8 +57,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ handleToggler, search
             id="startData"
             monthsShown={2}
             onChange={handleChange}
-            startDate={startDate}
-            endDate={endDate}
+            startDate={startDate ? startDate : undefined}
+            endDate={endDate ? endDate : undefined}
             // excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
             selectsRange
             selectsDisabledDaysInRange
