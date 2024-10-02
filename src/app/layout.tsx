@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import ReactQuery from "@/components/ReactQuery";
+import { Suspense } from 'react'
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +31,13 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <Header />
-          <div className="  max-w-screen-xl mx-auto">
-            {children}
-          </div>
+          <Suspense fallback={<p>Loading...</p>}>
+
+            <Header />
+            <div className="  max-w-screen-xl mx-auto">
+              {children}
+            </div>
+          </Suspense>
 
         </body>
       </html>

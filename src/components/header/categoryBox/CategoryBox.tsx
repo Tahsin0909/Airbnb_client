@@ -70,7 +70,7 @@ const CategoryBox = () => {
     const handleCategory = (category: string) => {
         setActiveCategory(category);
 
-        const params = new URLSearchParams(searchParams.toString())
+        const params = new URLSearchParams(searchParams?.toString())
         params.set("room_type_categories", category);
 
         router.push( `?${params.toString()}`);

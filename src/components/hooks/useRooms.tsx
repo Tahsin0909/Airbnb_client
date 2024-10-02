@@ -11,8 +11,7 @@ const useRooms = () => {
     const { isLoading, data: roomsData, refetch } = useQuery({
         queryKey: ["roomsData", searchParams], // Include searchParams in the query key to refetch data when it changes
         queryFn: async () => {
-            const params = new URLSearchParams(searchParams.toString())
-            console.log(params);
+            const params = new URLSearchParams(searchParams?.toString())
             const baseURL = `https://air-bnb-server-beryl.vercel.app/rooms`;
             const fetchURL = params ? `${baseURL}?${params}` : baseURL;
 
