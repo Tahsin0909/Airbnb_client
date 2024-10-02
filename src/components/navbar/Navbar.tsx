@@ -11,7 +11,7 @@ import useSearchToggle from '../hooks/useSearchToggle'; // Custom hook to manage
 // Navbar component
 const Navbar = () => {
     const [searchToggle, setSearchToggle] = useSearchToggle(); // Custom hook to get search toggle state and setter
-    console.log("Navbar rendered", searchToggle); // Debugging log to track render and state
+
 
     return (
         // Navbar container with dynamic height based on `searchToggle` state
