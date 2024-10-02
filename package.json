@@ -15,6 +15,7 @@
     "react-datepicker": "^7.4.0",
     "react-dom": "^18",
     "react-icons": "^5.3.0",
+    "react-multi-input-rangeslider": "^1.0.12",
     "swiper": "^11.1.14"
   },
   "devDependencies": {
