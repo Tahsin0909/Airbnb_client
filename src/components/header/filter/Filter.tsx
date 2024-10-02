@@ -21,6 +21,7 @@ import { LiaTemperatureHighSolid } from "react-icons/lia"
 
 import { IconType } from 'react-icons'; // This helps with the type of the icons
 import { useRouter } from "next/navigation";
+import useRooms from "@/components/hooks/useRooms";
 
 // Map the icon strings to their respective components
 
@@ -42,7 +43,7 @@ const Filter = () => {
     const router = useRouter()
 
 
-
+    const [roomsData, isLoading, refetch ] = useRooms()
 
     const iconMapping: Record<string, IconType> = {
         FaWifi: FaWifi,
@@ -170,11 +171,13 @@ const Filter = () => {
         if (price.maxPrice > 0) query.set("max_price", price.maxPrice.toString());
 
         // Handle bedroom count
-        if (bedRoom > 0) query.set("bedroom", bedRoom.toString());
+        if (bedRoom > 0) query.set("bedrooms", bedRoom.toString());
 
         // Push the updated query to the router
         router.push(`?${query.toString()}`);
+        refetch()
         handleModalClose()
+
     };
 
 

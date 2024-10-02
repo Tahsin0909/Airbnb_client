@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
@@ -12,6 +13,7 @@ import { useState } from "react";
 import { Swiper as SwiperCore } from 'swiper';
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import useRooms from "@/components/hooks/useRooms";
 
 
 interface categories {
@@ -21,6 +23,10 @@ interface categories {
 
 
 const CategoryBox = () => {
+
+    const[roomsData, isLoading, refetch ] = useRooms()
+
+
 
     const router = useRouter()
     const categories: categories[] = [
@@ -63,12 +69,13 @@ const CategoryBox = () => {
 
     const handleCategory = (category: string) => {
         setActiveCategory(category);
-    
+
         const query = new URLSearchParams(window.location.search);
-    
+
         query.set("room_type_categories", category);
-    
+
         router.push(`?${query.toString()}`);
+        refetch()
     };
 
     return (

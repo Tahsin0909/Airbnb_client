@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 /* eslint-disable @next/next/no-img-element */
@@ -7,11 +8,13 @@ import Link from 'next/link'; // Import Next.js Link component for navigation
 import Search from './search/Search'; // Import Search component
 import Profile from './profile/Profile'; // Import Profile component
 import useSearchToggle from '../hooks/useSearchToggle'; // Custom hook to manage search toggle state
+import useRooms from '../hooks/useRooms';
 
 // Navbar component
 const Navbar = () => {
     const [searchToggle, setSearchToggle] = useSearchToggle(); // Custom hook to get search toggle state and setter
 
+    const [roomsData, isLoading, refetch ] = useRooms()
 
     return (
         // Navbar container with dynamic height based on `searchToggle` state
@@ -22,7 +25,7 @@ const Navbar = () => {
                 <div className='flex items-center justify-between w-full h-[100px]'>
                     
                     {/* Logo linking back to the homepage */}
-                    <Link href={'/'}>
+                    <Link href={'/'} onClick={() => refetch()}>
                         <Image width={118} height={64} src={logo} alt='airbnb Logo' /> {/* Airbnb logo */}
                     </Link>
                     

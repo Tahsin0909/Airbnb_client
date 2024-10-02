@@ -9,9 +9,12 @@ import GuestInput from "./GuestInput"; // Guest input component
 import LocationInput from "./LocationInput"; // Location input component
 import DateRangePicker from "./DateRangePicker"; // Date range picker component
 import { useRouter } from "next/navigation"; // Next.js router for navigation
+import useRooms from "@/components/hooks/useRooms";
 
 // Search component with props: searchToggle and setSearchToggle
 const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
+
+    const [roomsData, isLoading, refetch ] = useRooms()
 
     // Toggles search bar open/close
     const handleToggler = () => {
@@ -25,8 +28,7 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
     const [location, setLocation] = useState<string | null>(""); // State for location input
     const [date, setDate] = useState<{ formattedStartDate: string | null, formattedEndDate: string | null } | null>(null); // State for date range
 
-    // Logs the state values (location, start date, end date, guests)
-    console.log("Search", location, date?.formattedStartDate, date?.formattedEndDate, guests);
+
 
     const router = useRouter(); // If using Next.js for navigation
 
@@ -43,6 +45,7 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
 
         // Push the updated query to the router (this preserves any previous queries)
         router.push(`?${query.toString()}`);
+        refetch()
     };
 
 
