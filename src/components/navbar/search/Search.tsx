@@ -33,23 +33,16 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
     // Handle search action
     const handleSearch = () => {
         // Construct the query string from the states (location, date, guests)
-        const query = new URLSearchParams({
-            country: location || "", // If location is null, fallback to an empty string
-            start_date: date?.formattedStartDate || "", // Fallback if no start date
-            end_date: date?.formattedEndDate || "", // Fallback if no end date
-            guest: guests || "0", // Default to "0" if no guest count is provided
-        });
+        const query = new URLSearchParams(window.location.search);
 
-        // // Log the search query for debugging
-        // console.log("Search", query.toString());
+        // Set or update each search parameter (location, date, guests)
+        if (location) query.set("country", location);
+        if (date?.formattedStartDate) query.set("start_date", date.formattedStartDate);
+        if (date?.formattedEndDate) query.set("end_date", date.formattedEndDate);
+        if (guests) query.set("guest", guests.toString());
 
-        // // Navigate to search results page with the query string (Next.js)
+        // Push the updated query to the router (this preserves any previous queries)
         router.push(`?${query.toString()}`);
-        
-        // // Fetch data from the API based on the search query
-        // fetch(`https://air-bnb-server-beryl.vercel.app/rooms?${query.toString()}`)
-        // .then(res => res.json())
-        // .then(data => console.log(data)) // Log the fetched data
     };
 
 

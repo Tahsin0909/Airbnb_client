@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import { useState } from "react";
 import { Swiper as SwiperCore } from 'swiper';
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 
 interface categories {
@@ -21,7 +22,9 @@ interface categories {
 
 const CategoryBox = () => {
 
+    const router = useRouter()
     const categories: categories[] = [
+        { category: "Luxury Stays", icon: "https://a0.muscache.com/im/pictures/mediaverse/category_icon/original/3e5243c8-4d15-4c6b-97e3-7ba2bb7bb880.png" },
         { category: "Villas", icon: "https://a0.muscache.com/pictures/c9157d0a-98fe-4516-af81-44022118fbc7.jpg" },
         { category: "Campers and RVs", icon: "https://a0.muscache.com/pictures/ca25c7f3-0d1f-432b-9efa-b9f5dc6d8770.jpg" },
         { category: "Lofts", icon: "https://a0.muscache.com/pictures/8eccb972-4bd6-43c5-ac83-27822c0d3dcd.jpg" },
@@ -48,7 +51,7 @@ const CategoryBox = () => {
         { category: "Amazing Views", icon: "https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg" },
         { category: "Countryside", icon: "https://a0.muscache.com/pictures/6ad4bd95-f086-437d-97e3-14d12155ddfe.jpg" },
         { category: "Island Stays", icon: "https://a0.muscache.com/pictures/8e507f16-4943-4be9-b707-59bd38d56309.jpg" },
-        { category: "Luxury Stays", icon: "https://a0.muscache.com/im/pictures/mediaverse/category_icon/original/3e5243c8-4d15-4c6b-97e3-7ba2bb7bb880.png" },
+
         { category: "Off-the-Grid", icon: "https://a0.muscache.com/pictures/9a2ca4df-ee90-4063-b15d-0de7e4ce210a.jpg" },
         { category: "Pet-Friendly", icon: "https://a0.muscache.com/pictures/747b326c-cb8f-41cf-a7f9-809ab646e10c.jpg" },
         { category: "Bed & Breakfast", icon: "https://a0.muscache.com/pictures/5ed8f7c7-2e1f-43a8-9a39-4edfc81a3325.jpg" }
@@ -56,38 +59,58 @@ const CategoryBox = () => {
 
     // State for storing the Swiper instance, typed with SwiperCore
     const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
+    const [activeCategory, setActiveCategory] = useState<string | null>(null)
+
+    const handleCategory = (category: string) => {
+        setActiveCategory(category);
+    
+        const query = new URLSearchParams(window.location.search);
+    
+        query.set("room_type_categories", category);
+    
+        router.push(`?${query.toString()}`);
+    };
 
     return (
-        <div className=" w-full h-full bg-white relative">
-            <div className="absolute top-[25%] w-full z-40">
-                <div className=" w-full flex justify-between">
-                    {/* Left (Previous) button */}
-                    <button className={` p-3 rounded-full border hover:shadow-xl transition-all ease-linear`}
-                        onClick={() => swiperInstance?.slidePrev()}>
-                        <MdArrowBackIos className='  relative ' />
-                    </button>
-                    {/* Right (Next) button */}
-                    <button className={`p-3 rounded-full border hover:shadow-xl transition-all ease-linear `}
-                        onClick={() => swiperInstance?.slideNext()}>
-                        <MdArrowForwardIos  className='  relative ' />
-                    </button>
-                </div>
+        <div className=" w-full h-full bg-white relative flex items-center justify-between">
+            <div className="flex justify-between">
+                {/* Left (Previous) button */}
+                <button className={` p-3 rounded-full border hover:shadow-xl transition-all ease-linear`}
+                    onClick={() => swiperInstance?.slidePrev()}>
+                    <MdArrowBackIos className='  relative ' />
+                </button>
+
             </div>
             <Swiper
-                slidesPerView={10}
+                slidesPerView={7}
                 slidesPerGroup={5}
-                onSwiper={(swiper) => setSwiperInstance(swiper)}
-                className="mySwiper mx-8">
-                {
-                    categories?.map((category, idx) => <SwiperSlide key={idx} className="p-4">
-                        <div className="flex flex-col items-center justify-center space-y-2">
-                            <img src={category.icon} alt="" className="w-6 h-6" />
-                            <p className="text-[12px] text-nowrap">{category.category}</p>
-                        </div>
-                    </SwiperSlide>)
-                }
-            </Swiper>
 
+                onSwiper={(swiper) => setSwiperInstance(swiper)}
+                className="mySwiper">
+                {categories?.map((category, idx) => (
+                    <SwiperSlide key={idx} className={`${category.category == activeCategory ? 'border-b-2 border-black' : ""} flex items-center justify-center`}
+                        onClick={() => handleCategory(category.category)}>
+                        <div className="flex flex-col items-center justify-center w-28 space-y-2 cursor-pointer group h-full py-3">
+                            {/* Icon */}
+                            <img
+                                src={category.icon}
+                                alt={category.category}
+                                className={`${category.category == activeCategory ? 'opacity-100' : ""} w-6 h-6  transition-opacity duration-300 ease-in-out opacity-60 group-hover:opacity-100`}
+                            />
+                            {/* Category Name */}
+                            <p className={`${category.category == activeCategory ? 'opacity-100' : ""} text-[12px] text-center font-semibold  transition-opacity duration-300 ease-in-out text-nowrap opacity-60 group-hover:opacity-100`}>
+                                {category.category}
+                            </p>
+                        </div>
+                    </SwiperSlide>
+                ))}
+
+            </Swiper>
+            {/* Right (Next) button */}
+            <button className={`p-3 rounded-full border hover:shadow-xl transition-all ease-linear `}
+                onClick={() => swiperInstance?.slideNext()}>
+                <MdArrowForwardIos className='  relative ' />
+            </button>
         </div>
     );
 };
