@@ -12,7 +12,7 @@ import 'swiper/css/navigation';
 import { useState } from "react";
 import { Swiper as SwiperCore } from 'swiper';
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useRooms from "@/components/hooks/useRooms";
 
 
@@ -24,7 +24,7 @@ interface categories {
 
 const CategoryBox = () => {
 
-    const[roomsData, isLoading, refetch ] = useRooms()
+    const [roomsData, isLoading, refetch] = useRooms()
 
 
 
@@ -66,16 +66,15 @@ const CategoryBox = () => {
     // State for storing the Swiper instance, typed with SwiperCore
     const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
     const [activeCategory, setActiveCategory] = useState<string | null>(null)
-
+    const searchParams = useSearchParams()
     const handleCategory = (category: string) => {
         setActiveCategory(category);
 
-        const query = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(searchParams.toString())
+        params.set("room_type_categories", category);
 
-        query.set("room_type_categories", category);
-
-        router.push(`?${query.toString()}`);
-        refetch()
+        router.push( `?${params.toString()}`);
+        refetch({ force: true })
     };
 
     return (

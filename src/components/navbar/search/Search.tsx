@@ -45,7 +45,7 @@ const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
 
         // Push the updated query to the router (this preserves any previous queries)
         router.push(`?${query.toString()}`);
-        refetch()
+        refetch({force: true})
     };
 
 

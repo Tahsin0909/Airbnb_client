@@ -25,7 +25,7 @@ const Navbar = () => {
                 <div className='flex items-center justify-between w-full h-[100px]'>
                     
                     {/* Logo linking back to the homepage */}
-                    <Link href={'/'} onClick={() => refetch()}>
+                    <Link href={'/'} onClick={() =>  refetch({force: true})}>
                         <Image width={118} height={64} src={logo} alt='airbnb Logo' /> {/* Airbnb logo */}
                     </Link>
                     

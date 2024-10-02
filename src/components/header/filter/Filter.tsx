@@ -175,7 +175,7 @@ const Filter = () => {
 
         // Push the updated query to the router
         router.push(`?${query.toString()}`);
-        refetch()
+        refetch({force: true})
         handleModalClose()
 
     };
@@ -183,8 +183,8 @@ const Filter = () => {
 
 
     return (
-        <div>
-            <button onClick={handleModalOpen} className="flex items-center gap-2 border p-3 border-black rounded-md hover:shadow-lg active:scale-95 transition-all ease-linear">
+        <div className="">
+            <button onClick={handleModalOpen} className="flex items-center gap-2 border p-3  border-black rounded-md hover:shadow-lg active:scale-95 transition-all ease-linear">
                 <RxMixerHorizontal size={20} />
                 <span>Filter</span>
             </button>
