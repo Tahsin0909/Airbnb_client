@@ -3,121 +3,102 @@
 
 import { SearchProps } from "@/app/types";
 import { useEffect, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import { IoSearchSharp } from "react-icons/io5";
-import GuestInput from "./GuestInput";
-import LocationInput from "./LocationInput";
-import DateRangePicker from "./DateRangePicker";
-import { useRouter } from "next/navigation";
+import "react-datepicker/dist/react-datepicker.css"; // Importing Datepicker styles
+import { IoSearchSharp } from "react-icons/io5"; // Importing search icon
+import GuestInput from "./GuestInput"; // Guest input component
+import LocationInput from "./LocationInput"; // Location input component
+import DateRangePicker from "./DateRangePicker"; // Date range picker component
+import { useRouter } from "next/navigation"; // Next.js router for navigation
 
-
-
+// Search component with props: searchToggle and setSearchToggle
 const Search: React.FC<SearchProps> = ({ searchToggle, setSearchToggle }) => {
 
-    //fixed
-
-
-
+    // Toggles search bar open/close
     const handleToggler = () => {
         if (searchToggle) {
-            setSearchToggle((prev) => !prev);
+            setSearchToggle((prev) => !prev); // Toggle the state
         }
     };
 
-    const [guests, setGuests] = useState<string | null>("");
-    // console.log(guests);
-    const [location, setLocation] = useState<string | null>("");
-    const [date, setDate] = useState<{ formattedStartDate: string | null, formattedEndDate: string | null } | null>(null);
-    // console.log(location);
+    // State variables for guests, location, and date
+    const [guests, setGuests] = useState<string | null>(""); // State for number of guests
+    const [location, setLocation] = useState<string | null>(""); // State for location input
+    const [date, setDate] = useState<{ formattedStartDate: string | null, formattedEndDate: string | null } | null>(null); // State for date range
+
+    // Logs the state values (location, start date, end date, guests)
     console.log("Search", location, date?.formattedStartDate, date?.formattedEndDate, guests);
-    //fixed
 
     const router = useRouter(); // If using Next.js for navigation
 
+    // Handle search action
     const handleSearch = () => {
-        // Construct the query string
+        // Construct the query string from the states (location, date, guests)
         const query = new URLSearchParams({
-            country: location || "",
-            start_date: date?.formattedStartDate || "",
-            end_date: date?.formattedEndDate || "",
-            guest: guests || "0",
+            country: location || "", // If location is null, fallback to an empty string
+            start_date: date?.formattedStartDate || "", // Fallback if no start date
+            end_date: date?.formattedEndDate || "", // Fallback if no end date
+            guest: guests || "0", // Default to "0" if no guest count is provided
         });
 
-        // Log the search query
-        console.log("Search", query.toString());
+        // // Log the search query for debugging
+        // console.log("Search", query.toString());
 
-        // Navigate to search results page, if using Next.js:
+        // // Navigate to search results page with the query string (Next.js)
         router.push(`?${query.toString()}`);
-        fetch(`https://air-bnb-server-beryl.vercel.app/rooms?${query.toString()}`)
-        .then(res => res.json())
-        .then(data => console.log(data))
+        
+        // // Fetch data from the API based on the search query
+        // fetch(`https://air-bnb-server-beryl.vercel.app/rooms?${query.toString()}`)
+        // .then(res => res.json())
+        // .then(data => console.log(data)) // Log the fetched data
     };
 
 
     return (
-
         <div>
             <div className="flex justify-center items-center relative">
                 {
                     <div
                         className={`${searchToggle ? 'h-[48px] w-[calc(100vw - 50%)] -translate-y-12' : 'h-[65px] w-[calc(100vw - 20%)] translate-y-4'}
-                flex items-center border rounded-full shadow-md font-semibold transition-[width,height,transform]  ease-in-out transform origin-center absolute z-30 bg-white group`}
+                            flex items-center border rounded-full shadow-md font-semibold transition-[width,height,transform] ease-in-out transform origin-center absolute z-30 bg-white group`}
                     >
 
+                        {/* Location Input */}
                         <LocationInput
-                            handleToggler={handleToggler}
-                            searchToggle={searchToggle}
-                            value={location}
-                            onChange={setLocation} />
+                            handleToggler={handleToggler} // Toggle search state
+                            searchToggle={searchToggle} // Whether search is toggled
+                            value={location} // Location input value
+                            onChange={setLocation} // Update location value
+                        />
 
-
-                        {/* date  */}
                         {/* Date Range Picker */}
                         <DateRangePicker
-                            onDateChange={setDate}
-                            handleToggler={handleToggler}
-                            searchToggle={searchToggle}
+                            onDateChange={setDate} // Update date range value
+                            handleToggler={handleToggler} // Toggle search state
+                            searchToggle={searchToggle} // Whether search is toggled
                         />
-                        {/* date  */}
 
-
-
-
-                        {/* guest  */}
+                        {/* Guest Input */}
                         <GuestInput
-                            value={guests}
-                            onChange={setGuests}
-                            handleToggler={handleToggler}
-                            searchToggle={searchToggle}
+                            value={guests} // Guest input value
+                            onChange={setGuests} // Update guest value
+                            handleToggler={handleToggler} // Toggle search state
+                            searchToggle={searchToggle} // Whether search is toggled
                         />
-                        {/* guest  */}
 
-
-
-
-                        {/* search  */}
-                        <div
-                            className="h-full flex justify-center items-center rounded-r-full group-focus-within:bg-gray-200">
+                        {/* Search Button */}
+                        <div className="h-full flex justify-center items-center rounded-r-full group-focus-within:bg-gray-200">
                             <button
-                                onClick={handleSearch}
-                                type="submit"
-                                className="my-[7px] mr-[7px] p-[8px] bg-primary rounded-full active:scale-95 transition-all ease-in-out flex justify-center items-center">
-                                <IoSearchSharp size={20} className="text-white" />
+                                onClick={handleSearch} // Trigger search action
+                                className="my-[7px] mr-[7px] p-[8px] bg-primary rounded-full active:scale-95 transition-all ease-in-out flex justify-center items-center"
+                            >
+                                <IoSearchSharp size={20} className="text-white" /> {/* Search Icon */}
                             </button>
                         </div>
-                        {/* search  */}
-
-
-
                     </div>
                 }
             </div>
         </div>
-
-
-
     );
 };
 
 export default Search;
-

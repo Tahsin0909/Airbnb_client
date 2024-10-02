@@ -29,9 +29,6 @@ export default function RootLayout({children,}: Readonly<{children: React.ReactN
       >
           <Navbar />
           <BlankComponents/>
-        <div className="h-[100vh] flex items-start justify-start mt-10">
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem culpa voluptatum soluta, nemo accusamus non inventore asperiores iure quasi earum quod ad ipsa sapiente ea unde perspiciatis minus atque. Nam quam aut animi libero enim quos autem distinctio ipsum impedit necessitatibus assumenda quaerat corrupti quis qui deserunt corporis, voluptatibus esse, tenetur odio accusantium saepe vel deleniti ratione maxime. Assumenda cupiditate ipsum incidunt quibusdam quae sunt alias soluta eius ex, quidem repellendus aliquid aspernatur voluptas ipsa, eveniet vero necessitatibus unde perferendis. Ad blanditiis adipisci cumque rem laboriosam nostrum aliquam sequi. Voluptatem reiciendis esse consequuntur perferendis amet rem eveniet officiis facere est.</p>
-        </div>
         <div className="  max-w-screen-xl mx-auto">
           {children}
         </div>
